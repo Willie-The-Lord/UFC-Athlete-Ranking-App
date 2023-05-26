@@ -17,7 +17,7 @@ enum AthleteCallingError: Error {
 }
 
 class UFCService {
-    private let urlString = "https://run.mocky.io/v3/229eb677-d530-44c0-9070-aef91d57c247"
+    private let urlString = "https://run.mocky.io/v3/b00aee2b-a041-416a-b8f1-05cbc4b931be"
     
     func getAthletes(completion: @escaping ([Athlete]?, Error?) -> ()) {
         guard let url = URL(string: self.urlString) else {

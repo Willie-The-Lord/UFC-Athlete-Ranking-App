@@ -20,6 +20,15 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let linkButton = UIButton(type: .system)
+        linkButton.setImage(UIImage(systemName: "link"), for: .normal)
+        linkButton.tintColor = UIColor.black
+        linkButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        linkButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        linkButton.addTarget(self, action: #selector(deepLinkButtonTapped), for: .touchUpInside)
+        
+
 
         // Athlete Description: 00-00-00
         // Split the string into three components
@@ -41,10 +50,6 @@ class DetailViewController: UIViewController {
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
-        
-   
-        
-        
         // Create a vertical stack view
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -64,11 +69,6 @@ class DetailViewController: UIViewController {
             stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             stackView.heightAnchor.constraint(equalToConstant: 1000) // set a height constraint
         ])
-//        stackView.translatesAutoresizingMaskIntoConstraints = false
-//        let guide = view.safeAreaLayoutGuide
-//        stackView.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 16).isActive = true
-//        stackView.topAnchor.constraint(equalTo: guide.topAnchor, constant: 16).isActive = true
-//        stackView.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -16).isActive = true
         
         
         // Create an image view and add it to the scroll view
@@ -79,12 +79,12 @@ class DetailViewController: UIViewController {
                 imageView.contentMode = .scaleAspectFit
                 imageView.widthAnchor.constraint(equalToConstant: 250).isActive = true
                 imageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
-                stackView.insertArrangedSubview(imageView, at: 1)
+                stackView.insertArrangedSubview(imageView, at: 2)
             }
         }
         
         
-        // Create a vertical stack view
+        // Create a horizontal stack view
         let titleStackView = UIStackView()
         titleStackView.axis = .horizontal
         titleStackView.alignment = .center
@@ -108,7 +108,7 @@ class DetailViewController: UIViewController {
 
         // Set the attributed text on the label
         athleteName.attributedText = attributedText
-        titleStackView.addArrangedSubview(athleteName)
+        stackView.addArrangedSubview(athleteName)
         
         if athlete?.favorite ?? false {
             favoriteButton.setImage(UIImage(systemName: "heart")?.withTintColor(myColorRed, renderingMode: .alwaysOriginal), for:.selected)
@@ -123,6 +123,7 @@ class DetailViewController: UIViewController {
         
 
         titleStackView.addArrangedSubview(favoriteButton)
+        titleStackView.addArrangedSubview(linkButton)
         
         stackView.addArrangedSubview(titleStackView)
         
@@ -340,6 +341,14 @@ class DetailViewController: UIViewController {
 //        scrollView.addSubview(stackView)
         
         
+    }
+    
+    
+    @objc func deepLinkButtonTapped() {
+        // Open the deep link URL
+        if let deepLinkURL = URL(string: athlete?.url ?? "") {
+            UIApplication.shared.open(deepLinkURL, options: [:], completionHandler: nil)
+        }
     }
     
     
