@@ -1,4 +1,4 @@
-# Custom iOS feature
+# UFC Athlete Ranking App
 
 ## Demo
 
